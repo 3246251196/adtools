@@ -160,7 +160,11 @@ endif
 # Builds the cross binutils package (assembler, etc).
 #
 binutils-cross-build-done-$(BINUTILS_VERSION):
-	$(MAKE) -C ../binutils-build SRC_DIR=$(BINUTILS_SRC_DIR) PREFIX=$(CROSS_PREFIX) CROSS_BUILD_DIR=$(ROOT_DIR)/binutils-cross-build-$(BINUTILS_VERSION)
+	$(MAKE) -C ../binutils-build \
+		SRC_DIR=$(BINUTILS_SRC_DIR) \
+		PREFIX=$(CROSS_PREFIX) \
+		VERSION=$(BINUTILS_VERSION) \
+		CROSS_BUILD_DIR=$(ROOT_DIR)/binutils-cross-build-$(BINUTILS_VERSION)
 	touch $@
 
 .PHONY: binutils-build
@@ -333,6 +337,7 @@ binutils-native-done-$(BINUTILS_VERSION): libraries-done
 	PATH="$(CROSS_PREFIX)/bin:$(PATH)" $(MAKE) -C ../binutils-build native \
 			SRC_DIR=$(BINUTILS_SRC_DIR) \
 			PREFIX=/gcc \
+			VERSION=$(BINUTILS_VERSION) \
 			NATIVE_BUILD_DIR=$(ROOT_DIR)/binutils-native-build-$(BINUTILS_VERSION)
 	touch $@
 
